@@ -1,16 +1,14 @@
 import os
 
 # Change video annotations to YOLO COCO text format
-def convert_annotations(file_name, output_folder, width, height):
-    
-    # Build input path and file name
-    # TODO: Fix directory structure
-    input_path = os.path.join(DATA_DIR, file_name)
-    text_file_name = os.path.splitext(file_name)[0]
-    
+def convert_annotations(file_name, input_path, output_folder, width, height):
+        
     frame_count = 0
+
+    input_file = os.path.join(input_path, f"{file_name}.txt")
+
     # Create/open the input annotation file
-    with open(input_path, 'r') as infile:
+    with open(input_file, 'r') as infile:
         # Each line in the input file corresponds to a single frame
         for line in infile:
             parts = line.split()
@@ -22,7 +20,7 @@ def convert_annotations(file_name, output_folder, width, height):
             # Each object begins at an index multiple of 5
             
             # Create the output file
-            output_file = os.path.join(output_folder, text_file_name, f"{text_file_name}_frame_{frame:04d}.txt")
+            output_file = os.path.join(output_folder, f"{file_name}_frame_{frame:04d}.txt")
             with open(output_file, 'a') as outfile:
             
                 # Loop for each object in the line
