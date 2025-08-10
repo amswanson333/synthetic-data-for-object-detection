@@ -5,7 +5,7 @@ def convert_annotations(file_name, input_path, output_folder, width, height):
         
     frame_count = 0
 
-    text_file_name = os.path.split(file_name)[0]
+    text_file_name = os.path.splitext(file_name)[0]
     input_file = os.path.join(input_path, f"{text_file_name}.txt")
 
     # Create/open the input annotation file
