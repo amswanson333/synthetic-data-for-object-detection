@@ -8,5 +8,7 @@ def get_video_files(directory):
 
     for filename in os.listdir(directory):
         if os.path.splitext(filename)[1] in video_extensions:
-            video_files.append(filename)
+            name = os.path.splitext(filename)[0]
+            video_files.append(name)
+            
     return video_files
