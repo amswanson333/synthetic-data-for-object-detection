@@ -27,9 +27,10 @@ def to_frames(file_name, input_folder, output_folder):
     cap.release()
     print(f"Extracted {frame_count} frames to {output_folder}")
     
-def get_resolution(file_name):
-    # TODO: update path functions
-    video_path = os.path.join(DATA_DIR, file_name)
+def get_resolution(file_name, input_folder):
+    
+    
+    video_path = os.path.join(input_folder, file_name)
     cap = cv2.VideoCapture(video_path)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
