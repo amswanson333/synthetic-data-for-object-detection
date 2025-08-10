@@ -1,9 +1,9 @@
 import os
 
 def get_video_files(directory):
-    
-    video_extensions = ['.mp4', '.avi', '.mov', '.mkv',
-                        '.MP4', '.AVI', '.MOV', '.MKV']
+
+    video_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.mpg',
+                        '.MP4', '.AVI', '.MOV', '.MKV', '.MPG']
     video_files = []
 
     for filename in os.listdir(directory):
