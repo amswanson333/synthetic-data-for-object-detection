@@ -3,7 +3,7 @@ import cv2
 
 def get_image_files(directory):
 
-    file_ext = ['.png', '.jpg', '.jpeg', '.gif', '.bmp']
+    file_ext = ('.png', '.jpg', '.jpeg', '.gif', '.bmp')
     image_files = []
     for file in os.listdir(directory):
         if file.lower().endswith(file_ext):
