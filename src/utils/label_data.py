@@ -56,3 +56,26 @@ def convert_annotations(file_name, input_path, output_folder, width, height):
             frame_count += 1
     
     print(f"Wrote {frame_count} annotation files to {output_folder}")
+    
+    
+def frame_overview(directory):
+    
+    frames = []
+    empty_frames = []
+    file_names = []
+    
+    for file_name in os.listdir(directory):
+        zero_count = 0
+        line_count = 0
+        if file_name.endswith('.txt'):
+            with open(os.path.join(directory, file_name), 'r') as file:
+                for line in file:
+                    line_count += 1
+                    parts = line.split()
+                    if len(parts) > 1 and parts[1] == '0':
+                        zero_count += 1
+            frames.append(line_count)
+            empty_frames.append(zero_count)
+            file_names.append(file_name)
+            
+    return file_names, empty_frames, frames
