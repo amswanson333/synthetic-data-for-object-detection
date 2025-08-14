@@ -210,3 +210,4 @@ data/external/3d_models
 data/interim/drone_vs_bird_data
 data/processed/test
 data/processed/train
+data/processed/val
