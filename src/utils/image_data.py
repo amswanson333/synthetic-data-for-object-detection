@@ -1,5 +1,6 @@
 import os
 import cv2
+from PIL import Image
 
 def get_image_files(directory):
 
@@ -17,3 +18,8 @@ def is_blank_image(image_path, threshold=10):
         return False
     return (img < threshold).all()
 
+def scale_image_down(image_path, max_size):
+    
+    img = Image.open(image_path)
+    img.thumbnail((max_size, max_size), Image.ANTIALIAS)
+    img.save(image_path)
