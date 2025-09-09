@@ -79,3 +79,36 @@ def frame_overview(directory):
             file_names.append(file_name)
             
     return file_names, empty_frames, frames
+
+def bbox_area(bbox):
+    '''
+    Calculate the area of a bounding box.
+    '''
+    _, x_center, y_center, width, height = map(float, bbox)
+    return width * height
+
+def read_bbox_file(file_path):
+    '''
+    Read bounding boxes from a text file.
+    '''
+    bboxes = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            parts = line.split()
+            if len(parts) == 5:
+                bboxes.append(parts)
+    return bboxes
+
+def bbox_info(bbox):
+    '''
+    Get information about a bounding box.
+    '''
+    label, x_center, y_center, width, height = map(float, bbox)
+    return {
+        "label": label,
+        "x_center": x_center,
+        "y_center": y_center,
+        "width": width,
+        "height": height,
+        "area": bbox_area(bbox)
+    }
