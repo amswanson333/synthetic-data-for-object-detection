@@ -27,3 +27,14 @@ def get_image_files(directory):
         if os.path.splitext(file)[1].lower() in file_ext:
             image_files.append(os.path.join(directory, file))
     return image_files
+
+def get_annotation_files(directory):
+    '''
+    Get a list of annotation files in a directory.
+    '''
+    file_ext = ('.xml', '.json', '.txt')
+    annotation_files = []
+    for file in os.listdir(directory):
+        if os.path.splitext(file)[1].lower() in file_ext:
+            annotation_files.append(os.path.join(directory, file))
+    return annotation_files
