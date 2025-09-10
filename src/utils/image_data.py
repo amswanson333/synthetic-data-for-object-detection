@@ -45,5 +45,8 @@ def draw_bbox(image_path, bboxes):
     img = cv2.imread(image_path)
     for bbox in bboxes:
         _, x1, y1, x2, y2 = bbox
+        # Draw the rectangle with top left and bottom right points
         cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+        # Add the label
+        cv2.putText(img, "Drone", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
     return img
