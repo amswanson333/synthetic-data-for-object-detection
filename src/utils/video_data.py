@@ -48,3 +48,15 @@ def get_duration(file_name, input_folder):
     duration = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(cv2.CAP_PROP_FPS))
     cap.release()
     return duration
+
+def create_video(images, width, height, output_path, fps=20):
+    '''
+    Create a video from a list of images.
+    '''
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+    out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
+
+    for img in images:
+        out.write(img)
+
+    out.release()
