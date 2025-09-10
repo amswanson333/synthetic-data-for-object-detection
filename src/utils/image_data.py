@@ -37,3 +37,13 @@ def image_quadrants(image_path):
         "bottom_right": img[height - patch_size[1]:height, width - patch_size[0]:width]
     }
     return quadrants
+
+def draw_bbox(image_path, bboxes):
+    '''
+    Draw bounding boxes on an image.
+    '''
+    img = cv2.imread(image_path)
+    for bbox in bboxes:
+        _, x1, y1, x2, y2 = bbox
+        cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
+    return img
