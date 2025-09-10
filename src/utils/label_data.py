@@ -1,3 +1,4 @@
+from cProfile import label
 import os
 
 # Change video annotations to YOLO COCO text format
@@ -112,3 +113,15 @@ def bbox_info(bbox):
         "height": height,
         "area": bbox_area(bbox)
     }
+
+def bbox_xxyy(bbox):
+    '''
+    Convert a bounding box from YOLO format (x_center, y_center, width, height)
+    to (x1, y1, x2, y2) format.
+    '''
+    _, x_center, y_center, width, height = map(float, bbox)
+    x1 = x_center - width / 2
+    y1 = y_center - height / 2
+    x2 = x_center + width / 2
+    y2 = y_center + height / 2
+    return (x1, y1, x2, y2)
