@@ -2,8 +2,9 @@ import os
 import cv2
 
 def to_frames(file_name, input_folder, output_folder):
-    
-    
+    '''
+    Convert a video file to individual frames.
+    '''
     video_file_path = os.path.join(input_folder, file_name)
     base_name = os.path.splitext(file_name)[0]
         
@@ -28,8 +29,9 @@ def to_frames(file_name, input_folder, output_folder):
     print(f"Extracted {frame_count} frames to {output_folder}")
     
 def get_resolution(file_name, input_folder):
-    
-    
+    '''
+    Get the resolution of a video file.
+    '''
     video_path = os.path.join(input_folder, file_name)
     cap = cv2.VideoCapture(video_path)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
