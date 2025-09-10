@@ -38,3 +38,13 @@ def get_resolution(file_name, input_folder):
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     cap.release()
     return width, height
+
+def get_duration(file_name, input_folder):
+    '''
+    Get the duration of a video file.
+    '''
+    video_path = os.path.join(input_folder, file_name)
+    cap = cv2.VideoCapture(video_path)
+    duration = int(cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(cv2.CAP_PROP_FPS))
+    cap.release()
+    return duration
