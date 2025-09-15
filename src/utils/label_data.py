@@ -147,10 +147,30 @@ def bbox_quadrants(bbox):
 
     # Define the quadrants
     quadrants = {
-        "top_left": (x1 / 0.55, y1 / 0.55, min(x2, 0.55) / 0.55, min(y2, 0.55) / 0.55),
-        "top_right": (max(x1, 0.45) / 0.55, y1 / 0.55, x2 / 0.55, min(y2, 0.55) / 0.55),
-        "bottom_left": (x1 / 0.55, max(y1, 0.45) / 0.55, min(x2, 0.55) / 0.55, y2 / 0.55),
-        "bottom_right": (max(x1, 0.45) / 0.55, max(y1, 0.45) / 0.55, x2 / 0.55, y2 / 0.55)
+        "top_left": (
+            x1 / 0.55,
+            y1 / 0.55,
+            min(x2, 0.55) / 0.55,
+            min(y2, 0.55) / 0.55
+            ),
+        "top_right": (
+            (max(x1, 0.45) - 0.45) / 0.55,
+            y1 / 0.55,
+            x2 / 0.55,
+            min(y2, 0.55) / 0.55
+        ),
+        "bottom_left": (
+            x1 / 0.55,
+            (max(y1, 0.45) - 0.45) / 0.55,
+            min(x2, 0.55) / 0.55,
+            y2 / 0.55
+        ),
+        "bottom_right": (
+            (max(x1, 0.45) - 0.45) / 0.55,
+            (max(y1, 0.45) - 0.45) / 0.55,
+            x2 / 0.55,
+            y2 / 0.55
+        )
     }
 
     return quadrants
