@@ -43,8 +43,13 @@ def draw_bbox(image_path, bboxes):
     Draw bounding boxes on an image.
     '''
     img = cv2.imread(image_path)
+    width, height = img.shape[1], img.shape[0]
     for bbox in bboxes:
-        _, x1, y1, x2, y2 = bbox
+        x1, y1, x2, y2 = bbox
+        x1 = int(x1 * width)
+        y1 = int(y1 * height)
+        x2 = int(x2 * width)
+        y2 = int(y2 * height)
         # Draw the rectangle with top left and bottom right points
         cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 0), 2)
         # Add the label
