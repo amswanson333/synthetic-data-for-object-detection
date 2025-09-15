@@ -138,39 +138,66 @@ def bbox_yolo(bbox):
     # Note that class is hard-coded to 0 (drone)
     return (0, x_center, y_center, width, height)
 
-def bbox_quadrants(bbox):
+def bbox_quadrants(bboxes):
     '''
     Divide a bounding box into 4 quadrants.
     '''
-    x1, y1, x2, y2 = bbox_xxyy(bbox)
-
-
-    # Define the quadrants
+    # Holder for the bounding boxes in each quadrant
     quadrants = {
-        "top_left": (
-            x1 / 0.55,
-            y1 / 0.55,
-            min(x2, 0.55) / 0.55,
-            min(y2, 0.55) / 0.55
-            ),
-        "top_right": (
-            (max(x1, 0.45) - 0.45) / 0.55,
-            y1 / 0.55,
-            (x2 - 0.45) / 0.55,
-            min(y2, 0.55) / 0.55
-        ),
-        "bottom_left": (
-            x1 / 0.55,
-            (max(y1, 0.45) - 0.45) / 0.55,
-            min(x2, 0.55) / 0.55,
-            (y2 - 0.45) / 0.55
-        ),
-        "bottom_right": (
-            (max(x1, 0.45) - 0.45) / 0.55,
-            (max(y1, 0.45) - 0.45) / 0.55,
-            (x2 - 0.45) / 0.55,
+        "top_left": [],
+        "top_right": [],
+        "bottom_left": [],
+        "bottom_right": []
+    }
+    # Loop through all bounding boxes provided
+    for bbox in bboxes:
+        original_area = bbox_area(bbox)
+        x1, y1, x2, y2 = bbox_xxyy(bbox)
+        
+        top_left = (
+            x1 / 0.55, # Bounding boxes beyond the 0.55 cutoff will be >1
+            y1 / 0.55, # Bounding boxes beyond the 0.55 cutoff will be >1
+            min(x2, 0.55) / 0.55, # Bounding boxes beyond the 0.55 cutoff will be = 1
+            min(y2, 0.55) / 0.55 # Bounding boxes beyond the 0.55 cutoff will be = 1
+        )
+        top_left_area = (top_left[2] - top_left[0]) * (top_left[3] - top_left[1])
+        top_left_area_ratio = top_left_area / original_area if original_area > 0 else 0
+
+        top_right = (
+            (max(x1, 0.45) - 0.45) / 0.55, # Bounding boxes beyond the 0.45 cutoff will be = 0
+            y1 / 0.55, # Bounding boxes beyond the 0.55 cutoff will be >1
+            (x2 - 0.45) / 0.55, # Bounding boxes beyond the 0.45 cutoff will be <0
+            min(y2, 0.55) / 0.55 # Bounding boxes beyond the 0.55 cutoff will be = 1
+        )
+        top_right_area = (top_right[2] - top_right[0]) * (top_right[3] - top_right[1])
+        top_right_area_ratio = top_right_area / original_area if original_area > 0 else 0
+
+        bottom_left = (
+            x1 / 0.55, 
+            (max(y1, 0.45) - 0.45) / 0.55, 
+            min(x2, 0.55) / 0.55, 
             (y2 - 0.45) / 0.55
         )
-    }
+        bottom_left_area = (bottom_left[2] - bottom_left[0]) * (bottom_left[3] - bottom_left[1])
+        bottom_left_area_ratio = bottom_left_area / original_area if original_area > 0 else 0
+
+        bottom_right = (
+            (max(x1, 0.45) - 0.45) / 0.55, 
+            (max(y1, 0.45) - 0.45) / 0.55, 
+            (x2 - 0.45) / 0.55, 
+            (y2 - 0.45) / 0.55
+        )
+        bottom_right_area = (bottom_right[2] - bottom_right[0]) * (bottom_right[3] - bottom_right[1])
+        bottom_right_area_ratio = bottom_right_area / original_area if original_area > 0 else 0
+
+        # Check if the quadrants are valid and meet the area ratio criteria
+        if all(0 <= n <= 1 for n in top_left) and top_left_area_ratio > 0.1:
+            quadrants["top_left"].append(top_left)
+        if all(0 <= n <= 1 for n in top_right) and top_right_area_ratio > 0.1:
+            quadrants["top_right"].append(top_right)
+        if all(0 <= n <= 1 for n in bottom_left) and bottom_left_area_ratio > 0.1:
+            quadrants["bottom_left"].append(bottom_left)
+        if all(0 <= n <= 1 for n in bottom_right) and bottom_right_area_ratio > 0.1:
+            quadrants["bottom_right"].append(bottom_right)
 
     return quadrants
