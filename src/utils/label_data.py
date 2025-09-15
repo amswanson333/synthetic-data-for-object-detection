@@ -125,3 +125,32 @@ def bbox_xxyy(bbox):
     x2 = x_center + width / 2
     y2 = y_center + height / 2
     return (x1, y1, x2, y2)
+
+def bbox_yolo(bbox):
+    '''
+    Convert a bounding box from (x1, y1, x2, y2) to YOLO format (x_center, y_center, width, height).
+    '''
+    x1, y1, x2, y2 = map(float, bbox)
+    x_center = (x1 + x2) / 2
+    y_center = (y1 + y2) / 2
+    width = x2 - x1
+    height = y2 - y1
+    # Note that class is hard-coded to 0 (drone)
+    return (0, x_center, y_center, width, height)
+
+def bbox_quadrants(bbox):
+    '''
+    Divide a bounding box into 4 quadrants.
+    '''
+    x1, y1, x2, y2 = bbox_xxyy(bbox)
+
+
+    # Define the quadrants
+    quadrants = {
+        "top_left": (x1, y1, min(x2, 0.55), min(y2, 0.55)),
+        "top_right": (max(x1, 0.45), y1, x2, min(y2, 0.55)),
+        "bottom_left": (x1, max(y1, 0.45), min(x2, 0.55), y2),
+        "bottom_right": (max(x1, 0.45), max(y1, 0.45), x2, y2)
+    }
+
+    return quadrants
