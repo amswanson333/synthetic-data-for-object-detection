@@ -218,3 +218,5 @@ data/interim/junk_data
 data/interim/drone_vs_bird_shrunk.zip
 data/raw/drone_vs_bird_annotated_vids
 data/interim/dvb_multi_scale_data
+data/interim/dvb_multi_scale_data.zip
+data/interim/drone_vs_bird_data - Shortcut.lnk
