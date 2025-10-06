@@ -9,3 +9,4 @@ from . import label_data
 from . import video_data
 from . import files
 from . import image_data
+from . import synth
