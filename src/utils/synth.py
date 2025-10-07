@@ -57,7 +57,7 @@ def view_model(model_data):
     render_window_interactor.Start()
     
 # Create a VTK camera view of the model
-def camera_view(model_data, distance=2000):
+def camera_view(model_data, distance=2000, pitch=0, yaw=0, roll=0):
     # Create a VTK renderer, render window, and interactor
     renderer = vtk.vtkRenderer()
     renderer.SetBackground(0, 0, 0)  # Black, but will be transparent
@@ -76,9 +76,9 @@ def camera_view(model_data, distance=2000):
     actor.SetMapper(mapper)
     
     # Orient the actor (model)
-    pitch_degrees = 0 # Realistic orientation range [-90,90]
-    yaw_degrees = 0 # Realistic orentation range [-180,180]
-    roll_degrees = 0 # Realistic orientation range [-180,180]
+    pitch_degrees = pitch # Realistic orientation range [-90,90]
+    yaw_degrees = yaw # Realistic orentation range [-180,180]
+    roll_degrees = roll # Realistic orientation range [-180,180]
     actor.RotateX(pitch_degrees)
     actor.RotateZ(yaw_degrees)
     actor.RotateY(roll_degrees)
