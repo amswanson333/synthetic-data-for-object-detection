@@ -2,12 +2,12 @@ import vtk
 import os
 
 # Get the list of 3D model files
-def get_3d_model_files(data_dir):
-    file_ext = ['.obj', '.fbx', '.stl']
+def get_3d_model_files(directory):
+    file_ext = ('.obj', '.fbx', '.stl')
     model_files = []
-    for file in os.listdir(data_dir):
-        if os.path.splitext(file)[1] in file_ext:
-            model_files.append(file)
+    for file in os.listdir(directory):
+        if os.path.splitext(file)[1].lower() in file_ext:
+            model_files.append(os.path.join(directory, file))
     return model_files
 
 # Load a 3D model from a file into a VTK PolyData object
