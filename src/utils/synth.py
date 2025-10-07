@@ -78,7 +78,7 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
     actor.SetMapper(mapper)
     
     # Apply color to the model
-    actor.GetProperty().SetColor(1.0, 0.5, 1.0)
+    actor.GetProperty().SetColor(0.5, 0.5, 0.5)
     
     # Initial orientation of the actor (model)
     # Initial orientation is designed to initialize model facing to the right
@@ -129,5 +129,8 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
 def vtk_to_PIL(camera_view):
     
     img = Image.open(io.BytesIO(camera_view))
+    
+    image_box = img.getbbox()
+    img = img.crop(image_box)
     
     return img
