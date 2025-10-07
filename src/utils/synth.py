@@ -77,7 +77,11 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
     actor = vtk.vtkActor()
     actor.SetMapper(mapper)
     
+    # Apply color to the model
+    actor.GetProperty().SetColor(1.0, 0.5, 1.0)
+    
     # Initial orientation of the actor (model)
+    # Initial orientation is designed to initialize model facing to the right
     pitch_degrees = init_pitch # Realistic orientation range [-90,90]
     yaw_degrees = init_yaw # Realistic orentation range [-180,180]
     roll_degrees = init_roll # Realistic orientation range [-180,180]
@@ -100,7 +104,7 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
     camera.SetParallelProjection(1)  # Use parallel projection for orthographic view
     camera.SetParallelScale(1000)    # Adjust the scale for better visibility
     renderer.ResetCamera()
-    render_window.SetSize(800, 600)  # Set the window size
+    render_window.SetSize(1600, 1200)  # Set the window size
     render_window.Render()
 
     # Create a PNG writer to save the image
