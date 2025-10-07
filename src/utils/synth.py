@@ -1,4 +1,5 @@
 import vtk
+import os
 
 # Get the list of 3D model files
 def get_3d_model_files(data_dir):
