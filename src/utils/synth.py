@@ -113,9 +113,12 @@ def camera_view(model_data, distance=2000):
     png_writer.SetInputConnection(windowToImageFilter.GetOutputPort())
     png_writer.Write()
     
-    # Create output image in memory
-    output_img = png_writer.GetResult()
-    return output_img
+    # Create output in bytes object
+    output_result = png_writer.GetResult()
+    mem_view = memoryview(output_result)
+    output_raw = bytes(mem_view)
+    
+    return output_raw
 
 def vtk_to_PIL(camera_view):
     
