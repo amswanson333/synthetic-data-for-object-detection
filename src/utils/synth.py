@@ -3,6 +3,7 @@ from vtk.util import numpy_support
 from PIL import Image
 import numpy as np
 import os
+import io
 
 # Get the list of 3D model files
 def get_3d_model_files(directory):
@@ -122,12 +123,6 @@ def camera_view(model_data, distance=2000, pitch=0, yaw=0, roll=0):
 
 def vtk_to_PIL(camera_view):
     
-    # Convert VTK image data to a NumPy array
-    width, height, _ = camera_view.GetDimensions()
-    vtk_array = camera_view.GetPointData().GetScalars()
-    components = vtk_array.GetNumberOfComponents()
-    arr = numpy_support.vtk_to_numpy(vtk_array).reshape(height, width, components)
+    img = Image.open(io.BytesIO(camera_view))
     
-    # Convert the NumPy array to a PIL Image
-    img = Image.fromarray(arr)
     return img
