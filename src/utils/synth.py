@@ -58,7 +58,9 @@ def view_model(model_data):
     render_window_interactor.Start()
     
 # Create a VTK camera view of the model
-def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll=0):
+def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll=0, randomize=False, seed=0):
+    
+    rng = np.random.default_rng(seed)
     
     # Create a VTK renderer, render window, and interactor
     renderer = vtk.vtkRenderer()
@@ -80,14 +82,24 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
     # Apply color to the model
     actor.GetProperty().SetColor(0.5, 0.5, 0.5)
     
+    # Randomize color of model if randomize is True
+    if randomize:
+        actor.GetProperty().SetColor(rng.uniform(0, 1), rng.uniform(0, 1), rng.uniform(0, 1))
+    
     # Initial orientation of the actor (model)
     # Initial orientation is designed to initialize model facing to the right
-    pitch_degrees = init_pitch # Realistic orientation range [-90,90]
-    yaw_degrees = init_yaw # Realistic orentation range [-180,180]
-    roll_degrees = init_roll # Realistic orientation range [-180,180]
+    pitch_degrees = init_pitch
+    yaw_degrees = init_yaw
+    roll_degrees = init_roll
     actor.RotateX(pitch_degrees)
     actor.RotateZ(yaw_degrees)
     actor.RotateY(roll_degrees)
+    
+    # Add some random rotation to the model
+    if randomize:
+        actor.RotateX(rng.uniform(-90, 90))  # Random pitch adjustment
+        actor.RotateZ(rng.uniform(-180, 180))  # Random yaw adjustment
+        actor.RotateY(rng.uniform(-45, 45))  # Random roll adjustment
 
     # Add the actor to the renderer
     renderer.AddActor(actor)
