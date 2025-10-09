@@ -146,3 +146,25 @@ def vtk_to_PIL(camera_view):
     img = img.crop(image_box)
     
     return img
+
+def rng_scale(seed=0):
+    rng = np.random.default_rng(seed)
+    base = rng.gamma(shape=4.5, scale=0.08)
+    return 0.002 + (base / 8)
+
+def rng_position(obj_size=(1, 1), canvas_size=(640, 480), seed=0):
+    rng = np.random.default_rng(seed)
+    
+    # Get random values for x and y position from normal distribution
+    samples = rng.normal(size=2)
+    
+    # Set the values to between 0 and 1 using a sigmoid function
+    x_pos = 1 / (1 + np.exp(-samples[0]))
+    y_pos = 1 / (1 + np.exp(-samples[1]))
+    
+    # Adjust absolute x,y position to pixel position
+    # NOTE: this prevents the image from overlapping any edge
+    x_pos = x_pos * (canvas_size[0] - obj_size[0])
+    y_pos = y_pos * (canvas_size[1] - obj_size[1])
+    
+    return int(x_pos), int(y_pos)
