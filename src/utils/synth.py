@@ -168,3 +168,14 @@ def rng_position(obj_size=(1, 1), canvas_size=(640, 480), seed=0):
     y_pos = y_pos * (canvas_size[1] - obj_size[1])
     
     return int(x_pos), int(y_pos)
+
+def scale_obj(obj_image, scale, canvas_size=(640, 480)):
+    obj_width, obj_height = obj_image.size
+    aspect_ratio = obj_width / obj_height
+    
+    new_width = int(scale * canvas_size[0])
+    new_height = int(new_width / aspect_ratio)
+    
+    resized_obj = obj_image.resize((new_width, new_height), Image.BICUBIC)
+    
+    return resized_obj
