@@ -38,3 +38,14 @@ def get_annotation_files(directory):
         if os.path.splitext(file)[1].lower() in file_ext:
             annotation_files.append(os.path.join(directory, file))
     return annotation_files
+
+def get_3d_model_files(directory):
+    '''
+    Get a list of 3D model files in a directory.
+    '''
+    file_ext = ('.obj', '.fbx', '.stl')
+    model_files = []
+    for file in os.listdir(directory):
+        if os.path.splitext(file)[1].lower() in file_ext:
+            model_files.append(os.path.join(directory, file))
+    return model_files

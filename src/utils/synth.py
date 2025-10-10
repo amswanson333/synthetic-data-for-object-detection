@@ -5,14 +5,6 @@ import numpy as np
 import os
 import io
 
-# Get the list of 3D model files
-def get_3d_model_files(directory):
-    file_ext = ('.obj', '.fbx', '.stl')
-    model_files = []
-    for file in os.listdir(directory):
-        if os.path.splitext(file)[1].lower() in file_ext:
-            model_files.append(os.path.join(directory, file))
-    return model_files
 
 # Load a 3D model from a file into a VTK PolyData object
 def load_3d_model(file_path):
@@ -179,3 +171,4 @@ def scale_obj(obj_image, scale, canvas_size=(640, 480)):
     resized_obj = obj_image.resize((new_width, new_height), Image.BICUBIC)
     
     return resized_obj
+
