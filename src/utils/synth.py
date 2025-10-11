@@ -159,7 +159,7 @@ def rng_position(obj_size=(1, 1), canvas_size=(640, 480), seed=0):
     x_pos = x_pos * (canvas_size[0] - obj_size[0])
     y_pos = y_pos * (canvas_size[1] - obj_size[1])
     
-    return int(x_pos), int(y_pos)
+    return (int(x_pos), int(y_pos))
 
 def scale_obj(obj_image, scale, canvas_size=(640, 480)):
     obj_width, obj_height = obj_image.size
