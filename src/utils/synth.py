@@ -76,7 +76,7 @@ def camera_view(model_data, distance=2000, init_pitch=0, init_yaw=-90, init_roll
     
     # Randomize color of model if randomize is True
     if randomize:
-        actor.GetProperty().SetColor(rng.uniform(0, 1), rng.uniform(0, 1), rng.uniform(0, 1))
+        actor.GetProperty().SetColor(rng.uniform(0.1, 0.9), rng.uniform(0.1, 0.9), rng.uniform(0.1, 0.9))
     
     # Initial orientation of the actor (model)
     # Initial orientation is designed to initialize model facing to the right
