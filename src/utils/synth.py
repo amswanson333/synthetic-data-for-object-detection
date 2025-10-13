@@ -1,6 +1,7 @@
 import vtk
 from vtk.util import numpy_support
 from PIL import Image
+from PIL import ImageFilter
 import numpy as np
 import os
 import io
@@ -172,3 +173,54 @@ def scale_obj(obj_image, scale, canvas_size=(640, 480)):
     
     return resized_obj
 
+def rng_transform(obj_image, seed=42):
+    rng = np.random.default_rng(seed)
+    
+    # Randomly select a transformation
+    rand_int = rng.integers(low=0, high=8)
+    
+    # Default no transform
+    if rand_int == 0:
+        return obj_image
+    # Flip image left-right
+    if rand_int == 1:
+        return obj_image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+    # Flip image up-down
+    if rand_int == 2:
+        return obj_image.transpose(Image.Transpose.FLIP_TOP_BOTTOM)
+    # Apply gaussian blur
+    if rand_int == 3:
+        return obj_image.filter(ImageFilter.GaussianBlur(2))
+    # Apply smoothing
+    if rand_int == 4:
+        return obj_image.filter(ImageFilter.SMOOTH)
+    # Change hue
+    if rand_int == 5:
+        hsv_obj = obj_image.convert("HSV")
+        h, s, v = hsv_obj.split()
+        
+        h = h.point(lambda i: i * rng.uniform(0.15, 0.85))
+        
+        result_img = Image.merge("HSV", (h, s, v)).convert("RGB")
+        
+        return result_img
+    # Change saturation
+    if rand_int == 6:
+        hsv_obj = obj_image.convert("HSV")
+        h, s, v = hsv_obj.split()
+        
+        s = s.point(lambda i: i * rng.uniform(0.15, 0.85))
+        
+        result_img = Image.merge("HSV", (h, s, v)).convert("RGB")
+        
+        return result_img
+    # Change value
+    if rand_int == 7:
+        hsv_obj = obj_image.convert("HSV")
+        h, s, v = hsv_obj.split()
+        
+        v = v.point(lambda i: i * rng.uniform(0.15, 0.85))
+        
+        result_img = Image.merge("HSV", (h, s, v)).convert("RGB")
+        
+        return result_img
