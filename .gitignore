@@ -233,3 +233,7 @@ data/external/canvas
 data/external/drone_clipart
 data/interim/3d_model_data
 data/interim/clip_art_data
+data/processed/3d_models
+data/processed/baseline
+data/processed/clipart
+data/processed/testing
