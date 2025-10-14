@@ -237,3 +237,4 @@ data/processed/3d_models
 data/processed/baseline
 data/processed/clipart
 data/processed/testing
+src/secrets.env
