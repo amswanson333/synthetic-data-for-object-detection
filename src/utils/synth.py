@@ -224,3 +224,14 @@ def rng_transform(obj_image, seed=42):
         result_img = Image.merge("HSV", (h, s, v)).convert("RGB")
         
         return result_img
+
+def random_prompt(terrain, time_of_day, condition, seed=0):
+    rng = np.random.default_rng(seed)
+    
+    terrain = rng.choice(terrain)
+    time_of_day = rng.choice(time_of_day)
+    condition = rng.choice(condition)
+    
+    prompt = f"A photo of {terrain} landscape at {time_of_day} with {condition} weather taken by a professional photographer."
+        
+    return prompt
