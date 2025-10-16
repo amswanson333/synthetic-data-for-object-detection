@@ -238,15 +238,14 @@ def canvas_prompt(terrain, time_of_day, condition, season, seed=0):
         
     return prompt
 
-def canvas_genai(client, prompt, number_of_images, seed=0):
+def canvas_genai(client, prompt, number_of_images):
     
     model = "imagen-3.0-generate-002"
     
     gen_config = genai.types.GenerateImagesConfig(
         number_of_images=number_of_images,
         aspect_ratio="16:9",
-        enhance_prompt=True,
-        seed=seed
+        enhance_prompt=True
     )
     
     response = client.models.generate_images(
