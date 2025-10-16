@@ -3,6 +3,7 @@ from vtk.util import numpy_support
 from PIL import Image
 from PIL import ImageFilter
 import numpy as np
+from google import genai
 import os
 import io
 
@@ -225,13 +226,33 @@ def rng_transform(obj_image, seed=42):
         
         return result_img
 
-def random_prompt(terrain, time_of_day, condition, seed=0):
+def canvas_prompt(terrain, time_of_day, condition, season, seed=0):
     rng = np.random.default_rng(seed)
     
     terrain = rng.choice(terrain)
     time_of_day = rng.choice(time_of_day)
     condition = rng.choice(condition)
-    
-    prompt = f"A photo of {terrain} landscape at {time_of_day} with {condition} weather taken by a professional photographer."
+    season = rng.choice(season)
+
+    prompt = f"A photo of {terrain} landscape in {season} at {time_of_day} with {condition} weather taken by a professional photographer."
         
     return prompt
+
+def canvas_genai(client, prompt, seed=0):
+    
+    model = "imagen-3.0-generate-002"
+    
+    gen_config = genai.types.GenerateImagesConfig(
+        number_of_images=4,
+        aspect_ratio="16:9",
+        enhance_prompt=True,
+        seed=seed
+    )
+    
+    response = client.models.generate_images(
+        model = model,
+        prompt = prompt,
+        config = gen_config
+    )
+    
+    return response.generated_images
