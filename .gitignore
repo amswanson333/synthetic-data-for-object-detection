@@ -238,3 +238,4 @@ data/processed/baseline
 data/processed/clipart
 data/processed/testing
 src/secrets.env
+data/interim/genai_data
