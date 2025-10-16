@@ -244,8 +244,7 @@ def canvas_genai(client, prompt, number_of_images):
     
     gen_config = genai.types.GenerateImagesConfig(
         number_of_images=number_of_images,
-        aspect_ratio="16:9",
-        enhance_prompt=True
+        aspect_ratio="16:9"
     )
     
     response = client.models.generate_images(
