@@ -265,3 +265,20 @@ def object_prompt(object_types, object_colors, maneuvers, seed=0):
     prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a purely green background."
         
     return prompt
+
+def object_genai(client, prompt, number_of_images):
+    
+    model = "imagen-3.0-generate-002"
+    
+    gen_config = genai.types.GenerateImagesConfig(
+        number_of_images=number_of_images,
+        aspect_ratio="4:3"
+    )
+    
+    response = client.models.generate_images(
+        model = model,
+        prompt = prompt,
+        config = gen_config
+    )
+    
+    return response.generated_images
