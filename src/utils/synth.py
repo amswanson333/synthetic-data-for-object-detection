@@ -254,3 +254,14 @@ def canvas_genai(client, prompt, number_of_images):
     )
     
     return response.generated_images
+
+def object_prompt(object_types, object_colors, maneuvers, seed=0):
+    rng = np.random.default_rng(seed)
+    
+    object_type = rng.choice(object_types)
+    color = rng.choice(object_colors)
+    maneuver = rng.choice(maneuvers)
+
+    prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a purely green background."
+        
+    return prompt
