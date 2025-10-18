@@ -283,13 +283,19 @@ def object_genai(client, prompt, number_of_images):
     
     return response.generated_images
 
-def object_mask(obj_image, green_value=0):
-    # Convert image to RGBA if not already in that mode
-    if obj_image.mode != 'RGBA':
-        obj_image = obj_image.convert('RGBA')
+def object_mask(obj_image):    
+    # Convert image channels to numpy arrays
+    red_arr = np.array(obj_image.split()[0])
+    green_arr = np.array(obj_image.split()[1])
+    blue_arr = np.array(obj_image.split()[2])
     
-    # Create a binary mask based on green channel
-    green = obj_image.split()[1]
-    binary_mask = green.point(lambda p: 255 if p > green_value else 0)
+    # Create a blank binary mask
+    mask = np.zeros(green_arr.shape, dtype=np.uint8)
+    
+    # If the brightest channel is green, set mask pixel to 255 (white)
+    mask[(green_arr > red_arr) & (green_arr > blue_arr)] = 255
+    
+    # Convert numpy array back to PIL image
+    binary_mask = Image.fromarray(mask)
 
     return binary_mask
