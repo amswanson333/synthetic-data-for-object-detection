@@ -262,7 +262,7 @@ def object_prompt(object_types, object_colors, maneuvers, seed=0):
     color = rng.choice(object_colors)
     maneuver = rng.choice(maneuvers)
 
-    prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a purely green (RGB value 0,255,0) background."
+    prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a seamless, solid green background."
         
     return prompt
 
