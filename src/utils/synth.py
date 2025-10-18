@@ -318,7 +318,7 @@ def object_alpha(obj_image, obj_mask):
         for x in range(obj_image.width):
             r, g, b, a = obj_pixels[x, y]
             mask_value = mask_pixels[x, y]
-            if mask_value == 255:
+            if mask_value == 0:
                 output_pixels[x, y] = (r, g, b, 255)  # Keep original pixel with full opacity
             else:
                 output_pixels[x, y] = (0, 0, 0, 0)      # Set pixel to transparent
