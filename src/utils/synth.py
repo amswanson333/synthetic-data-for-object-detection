@@ -262,7 +262,7 @@ def object_prompt(object_types, object_colors, maneuvers, seed=0):
     color = rng.choice(object_colors)
     maneuver = rng.choice(maneuvers)
 
-    prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a purely green background."
+    prompt = f"A photo of a single, {color} colored {object_type} drone {maneuver} through the air against a purely green (RGB value 0,255,0) background."
         
     return prompt
 
@@ -282,3 +282,14 @@ def object_genai(client, prompt, number_of_images):
     )
     
     return response.generated_images
+
+def object_mask(obj_image, green_value=0):
+    # Convert image to RGBA if not already in that mode
+    if obj_image.mode != 'RGBA':
+        obj_image = obj_image.convert('RGBA')
+    
+    # Create a binary mask based on green channel
+    green = obj_image.split()[1]
+    binary_mask = green.point(lambda p: 255 if p > green_value else 0)
+
+    return binary_mask
