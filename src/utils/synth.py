@@ -299,3 +299,37 @@ def object_mask(obj_image):
     binary_mask = Image.fromarray(mask)
 
     return binary_mask
+
+def object_alpha(obj_image, obj_mask):
+    # Ensure both images are in RGBA mode
+    obj_image = obj_image.convert("RGBA")
+    obj_mask = obj_mask.convert("L")  # Convert mask to grayscale
+
+    # Create a new image for output
+    output_image = Image.new("RGBA", obj_image.size)
+
+    # Get pixel data
+    obj_pixels = obj_image.load()
+    mask_pixels = obj_mask.load()
+    output_pixels = output_image.load()
+
+    # Apply the mask to the object image
+    for y in range(obj_image.height):
+        for x in range(obj_image.width):
+            r, g, b, a = obj_pixels[x, y]
+            mask_value = mask_pixels[x, y]
+            if mask_value == 255:
+                output_pixels[x, y] = (r, g, b, 255)  # Keep original pixel with full opacity
+            else:
+                output_pixels[x, y] = (0, 0, 0, 0)      # Set pixel to transparent
+
+    return output_image
+
+def object_crop(obj_image):
+    # Get bounding box of non-transparent pixels
+    bbox = obj_image.getbbox()
+    
+    # Crop the image to the bounding box
+    cropped_image = obj_image.crop(bbox)
+    
+    return cropped_image
