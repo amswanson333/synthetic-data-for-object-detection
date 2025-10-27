@@ -240,3 +240,4 @@ data/processed/testing
 src/secrets.env
 data/interim/genai_data
 data/processed/genai
+model
