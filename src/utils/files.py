@@ -71,7 +71,19 @@ def cleanup_staging():
     '''
     Delete all files in the staging directories.
     '''
-    staging_dirs = [os.path.join('data', 'staging', 'train'), os.path.join('data', 'staging', 'val')]
+    # Delete .cache files in the staging folder
+    for filename in os.listdir('data/staging'):
+        if filename.endswith('.cache'):
+            file_path = os.path.join('data', 'staging', filename)
+            try:
+                os.unlink(file_path)
+            except Exception as e:
+                print(f'Failed to delete {file_path}. Reason: {e}')
+    
+    # Delete all files in staging directories
+    staging_dirs = [os.path.join('data', 'staging', 'train'), 
+                    os.path.join('data', 'staging', 'val'),
+                    os.path.join('data', 'staging', 'test')]
     for staging_dir in staging_dirs:
         for filename in os.listdir(staging_dir):
             file_path = os.path.join(staging_dir, filename)
