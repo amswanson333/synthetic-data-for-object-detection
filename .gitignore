@@ -241,3 +241,6 @@ src/secrets.env
 data/interim/genai_data
 data/processed/genai
 model
+data/staging/test
+data/staging/train
+data/staging/val
